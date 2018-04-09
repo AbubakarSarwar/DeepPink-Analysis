@@ -92,8 +92,6 @@ Sunfish is a better chess engine as it won 2/3 of the games played again Deep Pi
 
 
 
-
-
 4.	See how you can train the program in your own way and describe about the approach: Completed ✔
 
 ## My Own Approach
