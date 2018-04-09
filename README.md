@@ -19,32 +19,36 @@ Effort Required to make the code work:
 o	In the function 'get_model_from_pickle' from play.py, I had to change the 'read' parameter to 'read binary' as the new version requires the syntax 'rb' instead of 'r' when loading pickle. 
 o	Even after that, I was getting an error for ASCII Decoding so I had to add encoding = 'latin1' to load the pickle model.   
 o	The load.py file had a function xrange() which is deprecated now in the new version of python. So, I had to convert it from xrange() to range().
-Screenshots: I used the Spyder IDE that comes with Anaconda, to execute the code play.py. The screenshots are given below: ¬
+### Screenshots: 
+I used the Spyder IDE that comes with Anaconda, to execute the code play.py. The screenshots are given below: ¬
 ![Screenshot](1.png)
 ![Screenshot](2.png)
 ![Screenshot](3.png) 
 3.	Explain the flow of the program as a flowchart describe working of the code in a report format: Completed ✔
-The Current Approach
-Overview: 
+
+## The Current Approach
+### Overview: 
 Deep Pink itself is a deep learning based AI chess game created by Erik Bernhardsson.
 ![Screenshot](4.png) 
-Work Flow of the Approach:
+
+### Work Flow of the Approach:
 1.	Retrieving the Dataset: A set of 100 M games downloaded from FICS Games Database. The source is the world’s largest chess database. It provides the games played on the Free Internet Chess Server. However, the game played are not only by chess experts. Therefore, it means we cannot totally rely over the results of these games. The dataset contains file pgn format which are like a text file and equal to all the moves made by the player in a particular game.
 
 2.	Model Training: A 3 layer deep 2048 units wide artificial neural network. 
 
-4.	Input: The total input is basically 8x8x12 array. So basically a 768-wide layer which is a way of identifying the presence of the 12 pieces in each square. After three multiplications, the final dot product is a 2048 wide vector.
-5.	Layers: There are a total of 3 layers which means two convolutional and one fully connected layer because we know that there are no Drop out Layers in this model.
-6.	Output: A single scalar value. 
-7.	Duration: This model was trained on a GPU Instance from AWS which took about 4 days to train.
-8.	Model.pickle: The trained version of the algorithm is saved in the Model.pickle file that is in the Github link.
+a.	Input: The total input is basically 8x8x12 array. So basically a 768-wide layer which is a way of identifying the presence of the 12 pieces in each square. After three multiplications, the final dot product is a 2048 wide vector.
+b.	Layers: There are a total of 3 layers which means two convolutional and one fully connected layer because we know that there are no Drop out Layers in this model.
+c.	Output: A single scalar value. 
+d.	Duration: This model was trained on a GPU Instance from AWS which took about 4 days to train.
+e.	Model.pickle: The trained version of the algorithm is saved in the Model.pickle file that is in the Github link.
 
 3.	Ingesting Trained Model to Search Algorithm:  Once, the training of the model is completely. It is time to use the trained model as an Evaluation Function for the search algorithm that is being used. In our case, Deep Pink is using Negamax with alpha-beta pruning. The Negamax basically tackles the value of a position to player A in a way that it is the negation of the value to player B.  Morever, alpha-beta pruning is a variation of the algorithm that can decrease the number of nodes the negamax algorithm evaluates in a search tree. 
 
 4.	How does it make a move? After the model has been ingested as the evaluation function. Now, every time Deep Pink must make a move. It will use the Negamax search algorithm to find the best possible next move for itself. And the way it will do it is that it will pass the input to the neural network and get the result in a single value that how this next move will affect the environment and chances of losing/winning for the player. This way, it will calculate a series of moves and see which is the best possible move for deep pink at that moment. In short, it is working proactively by calculating the impact of its current move on the future. 
-Competitor: 
+
+### Competitor: 
 Sunfish, which is also an AI Chess engine created on python. This was used as a competitor of Sunfish to see how Deep Pink performs against another Chess engine. The chess engine resides inside the Sunfish.py file.
-Results:
+### Results:
 Sunfish is a better chess engine as it won 2/3 of the games played again Deep Pink. However, there are a set of reasons why SunFish was performing better than deep pink. I’ll try to tackle them when I’m giving my own approach.
 
 
@@ -52,7 +56,7 @@ Sunfish is a better chess engine as it won 2/3 of the games played again Deep Pi
 
 
 
-Basic Flow of the Code:
+### Basic Flow of the Code:
 1.	Execute Play.py to start the program
 2.	It fetches the model.pickle to load the pre trained neural network model.
 3.	It calls the game functions passing the model as the parameter
@@ -83,11 +87,15 @@ Basic Flow of the Code:
 
 
 4.	See how you can train the program in your own way and describe about the approach: Completed ✔
-My Own Approach
-Assumption:
+
+## My Own Approach
+
+### Assumption:
 I must work on the same Dataset as Deep Pink is currently using now.
-Overview: 
+
+### Overview: 
 ![Screenshot](5.png)  
+
 If I were to train Deep Pink on my own. The approach would also be a reinforcement learning approach including neural network. But to make it work better than the current approach I would change a series of a parameters as mentioned below: 
 Work Flow of the Approach:
 1.	Retrieving the Dataset: A set of 100 M games downloaded from FICS Games Database. It will be the same.
@@ -108,7 +116,7 @@ c.	Lastly, Sunfish also uses Minimax and we saw the results ourselves how it per
 6.	How does it make a move? The decision make skills will be similar to the previous approach. This approach also consists of an evaluation function that would be used to calculate the reward over a specific series of moves and then use minimax alpha beta pruning to decide which one is the best.
 
 
-Key Points:
+### Key Points:
 1) The dataset is assumed to be same. So, there is also room for improvement in that area too, if allowed.
 2) A deeper neural network would give a better result, even though it’s not necessary but it’s highly likely. 
 3) The developer of Deep Pink says, “Deep Pink plays pretty aggressively, but makes a lot of dumb mistakes.” The drop out layer is added in the neural network to minimize the chances of Deep Pink reacting and wasting time over noise.
