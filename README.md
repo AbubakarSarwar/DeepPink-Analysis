@@ -10,15 +10,23 @@ The following tasks were needed to be completed as a professional assesment test
 1)	Download the chess AI source code from https://github.com/erikbern/deep-pink : Completed ✔
 
 2)	Compile and run the program, capture some screen shots of execution: Completed ✔
+
 Effort Required to make the code work:
 
 •	Installed all the dependencies for Deep Pink (Such as Theano, SunFish etc)
+
 •	Couldn't Install Cuda for Theano because my laptop doesn't have NVidia Graphic Card but then got to know that GPU is optional for Theano not compulsory. 
+
 •	Had to rephrase the code in several portion to make the 2.7 version code work with my 3.6 version of python.
+
 •	The following are few of the changes that were made in the code to make it run:
+
 o	In the function 'get_model_from_pickle' from play.py, I had to change the 'read' parameter to 'read binary' as the new version requires the syntax 'rb' instead of 'r' when loading pickle. 
+
 o	Even after that, I was getting an error for ASCII Decoding so I had to add encoding = 'latin1' to load the pickle model.   
+
 o	The load.py file had a function xrange() which is deprecated now in the new version of python. So, I had to convert it from xrange() to range().
+
 ### Screenshots: 
 I used the Spyder IDE that comes with Anaconda, to execute the code play.py. The screenshots are given below: ¬
 ![Screenshot](1.png)
